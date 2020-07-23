@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+  <title>BREAD Postgresql</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+    integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+</head>
+
+<body style="font-family: Arial, Helvetica, sans-serif">
+  <div class="container">
+
+    <!-- =========================================Search Form======================================= -->
+    <form action="" method="GET" id="form-search">
+      <input type="hidden" id="page" name="page" value="1">
+      <h1>BREAD(Browse,Read,Edit,Add,Delete)</h1>
+      <h2>Filters</h2>
+
+      <div class="container">
+        <div class="row">
+          <div class="col">
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" id="cekId" name="cekid">
+              <label class="form-check-label" name="cekid" for="cekid">ID</label>
+            </div>
+          </div>
+          <div class="col-10">
+            <div class="form-group">
+              <input type="number" name="id" class="form-control" id="id" placeholder="ID">
+            </div>
+          </div>
+        </div>
+
+
+        <div class="row">
+          <div class="col">
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" id="cekString" name="cekstr">
+              <label class="form-check-label" name="cekstr" for="string">String</label>
+            </div>
+          </div>
+          <div class="col-10">
+            <div class="form-group">
+              <input type="text" name="str" class="form-control" id="str" placeholder="String">
+            </div>
+          </div>
+        </div>
+
+
+        <div class="row">
+          <div class="col">
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" id="cekInteger" name="cekint">
+              <label class="form-check-label" name="cekint" for="integer">Integer</label>
+            </div>
+          </div>
+          <div class="col-10">
+            <div class="form-group">
+              <input type="number" name="int" class="form-control" id="int" placeholder="Integer">
+            </div>
+          </div>
+        </div>
+
+
+        <div class="row">
+          <div class="col">
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" id="cekFloat" name="cekflo">
+              <label class="form-check-label" name="cekflo" for="float">Float</label>
+            </div>
+          </div>
+          <div class="col-10">
+            <div class="form-group">
+              <input type="number" step="any" name="float" class="form-control" id="float" placeholder="Float">
+            </div>
+          </div>
+        </div>
+
+
+        <div class="row">
+          <div class="col-2">
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" id="cekDate" name="cekdate">
+              <label class="form-check-label" for="date">
+                Date
+              </label>
+            </div>
+          </div>
+          <div class="col-3">
+            <div class="form-group">
+              <input type="date" name="startdate" class="form-control" id="startdate">
+            </div>
+          </div>
+          <div class="w-100"></div>
+          <p class="col offset-2">to</p>
+          <div class="w-100"></div>
+          <div class="col-3 offset-2">
+            <div class="form-group">
+              <input type="date" name="enddate" class="form-control" id="enddate">
+            </div>
+          </div>
+        </div>
+
+
+        <div class="row">
+          <div class="col">
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" id="cekBoolean" name="cekboo">
+              <label class="form-check-label" for="boolean">
+                Boolean
+              </label>
+            </div>
+          </div>
+          <div class="col-10">
+            <div class="form-group">
+              <select name="boolean" id="boolean" class="custom-select custom-select">
+                <option selected disabled>Choose the boolean ...</option>
+                <option name="boo" value="true">True</option>
+                <option name="boo" value="false">False</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <button style="background-color: dodgerblue;"  type="submit" class="btn btn-dark" id="search-btn">Search</button>
+        <a href="/">
+          <button style="background-color: dodgerblue;" type="button" class="btn btn-dark " id="reset">Reset</button>
+        </a>
+    </form>
+  </div>
+  <br>
+  <br>
+
+  <div class="container">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th scope="col">ID</th>
+          <th scope="col">String</th>
+          <th scope="col">Integer</th>
+          <th scope="col">Float</th>
+          <th scope="col">Date</th>
+          <th scope="col">Boolean</th>
+          <th scope="col">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+
+      </tbody>
+    </table>
+
+    <nav aria-label="Page navigation example">
+      <ul class="pagination">
+
+      </ul>
+    </nav>
+
+    
+  </div>
+
+  </div>
+<br><br><br>
+  <!-- ======================================FORM ADD==================================================== -->
+  <div class="container">
+    <form id="form-add">
+      <h1>ADD Data</h1>
+
+
+      <div class="form-group row">
+        <label for="string" class="col-sm-2 col-form-label">String</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" id="strdata" placeholder="String" name="str">
+        </div>
+      </div>
+
+
+      <div class="form-group row">
+        <label for="integer" class="col-sm-2 col-form-label">Integer</label>
+        <div class="col-sm-10">
+          <input type="number" class="form-control" id="intdata" placeholder="Integer" name="int">
+        </div>
+      </div>
+
+
+      <div class="form-group row">
+        <label for="float" class="col-sm-2 col-form-label">Float</label>
+        <div class="col-sm-10">
+          <input type="number" step="any" class="form-control" id="floatdata" placeholder="Float" name="float">
+        </div>
+      </div>
+
+
+      <div class="form-group row">
+        <label for="Date" class="col-sm-2 col-form-label">Date</label>
+        <div class="col-sm-10">
+          <input type="date" class="form-control" id="datedata" placeholder="End Date" name="date">
+        </div>
+      </div>
+
+
+      <div class="form-group row">
+        <label for="boolean" class="col-sm-2 col-form-label">Boolean</label>
+        <div class="col-sm-10">
+          <select class="custom-select" name="boolean" id="booleandata">
+            <option selected disabled>Choose the boolean ...</option>
+            <option value="true">True</option>
+            <option value="false">False</option>
+          </select>
+        </div>
+      </div>
+
+
+      <button class="btn btn-primary" type="submit">Save</button>
+    </form>
+  </div>
+  <br><br><br>
+  <!-- ==================================================FORM EDIT======================================= -->
+
+  <div class="container">
+    <form id="form-edit">
+      <h1>Edit Data</h1>
+
+      <div class="form-group row">
+        <label for="id" class="col-sm-2 col-form-label">ID</label>
+        <div class="col-sm-10">
+          <input type="" class="form-control" placeholder="ID" name="editId" id="editId" value="" readonly>
+        </div>
+      </div>
+
+
+      <div class="form-group row">
+        <label for="string" class="col-sm-2 col-form-label">String</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" id="editString" placeholder="String" name="editString">
+        </div>
+      </div>
+
+
+      <div class="form-group row">
+        <label for="integer" class="col-sm-2 col-form-label">Integer</label>
+        <div class="col-sm-10">
+          <input type="number" class="form-control" id="editInteger" placeholder="Integer" name="editInteger">
+        </div>
+      </div>
+
+
+      <div class="form-group row">
+        <label for="float" class="col-sm-2 col-form-label">Float</label>
+        <div class="col-sm-10">
+          <input type="number" step="any" class="form-control" id="editFloat" placeholder="Float" name="editFloat">
+        </div>
+      </div>
+
+
+      <div class="form-group row">
+        <label for="Date" class="col-sm-2 col-form-label">Date</label>
+        <div class="col-sm-10">
+          <input type="date" class="form-control" id="editDate" placeholder="End Date" name="editDate">
+        </div>
+      </div>
+
+
+      <div class="form-group row">
+        <label for="boolean" class="col-sm-2 col-form-label">Boolean</label>
+        <div class="col-sm-10">
+          <select class="custom-select" name="editBoolean" id="editBoolean">
+            <option selected disabled>Choose The Boolean</option>
+            <option value="true">True</option>
+            <option value="false">False</option>
+          </select>
+        </div>
+      </div>
+      <button class="btn btn-primary btn-update" type="submit">Update</button>
+    </form>
+  </div>
+  <br>
+
+
+  <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.7.0/moment.min.js" type="text/javascript"></script>
+  <script type="text/javascript">
+    const API_URL = 'http://localhost:3000/api/'
+
+    $(document).ready(() => {
+      loadData();
+
+      $("table tbody").on("click", ".btn-edit", function () {
+        printData($(this).attr('data-id'))
+      })
+
+      $('#form-add').submit((event) => {
+        event.preventDefault();
+        let stringdata = $('#strdata').val()
+        let integerdata = $('#intdata').val()
+        let floatdata = $('#floatdata').val()
+        let booleandata = $('#booleandata').val()
+        let datedata = $('#datedata').val()
+        addData({ stringdata, integerdata, floatdata, booleandata, datedata });
+      })
+
+      $('#form-edit').submit((event) => {
+        event.preventDefault();
+        let id = $('#editId').val()
+        let stringdata = $('#editString').val()
+        let integerdata = $('#editInteger').val()
+        let floatdata = $('#editFloat').val()
+        let booleandata = $('#editBoolean').val()
+        let datedata = $('#editDate').val()
+        editData(id, stringdata, integerdata, floatdata, booleandata, datedata);
+      })
+
+
+
+      $("table tbody").on("click", ".btn-delete", function () {
+        deleteData($(this).attr('data-id'));
+      });
+
+      $('nav').on('click', 'li', function (event) {
+        event.preventDefault();
+        $('#page').val($(this).attr('pageid'));
+        loadData();
+      })
+
+      $('#form-search').submit((event) => {
+        event.preventDefault();
+        $('#page').val(1);
+        loadData()
+      })
+
+      $('#reset').on('click', function () {
+        loadData()
+      })
+    })
+
+    const loadData = () => {
+      let page = $('#page').val();
+      let id = $('#id').val();
+      let str = $('#str').val();
+      let int = $('#int').val();
+      let float = $('#float').val();
+      let startdate = $('#startdate').val();
+      let enddate = $('#enddate').val();
+      let boolean = $('#boolean').val();
+      let cekId = $("input[type=checkbox][name=cekid]:checked").val();
+      let cekString = $("input[type=checkbox][name=cekstr]:checked").val();
+      let cekInteger = $("input[type=checkbox][name=cekint]:checked").val();
+      let cekFloat = $("input[type=checkbox][name=cekflo]:checked").val();
+      let cekDate = $("input[type=checkbox][name=cekdate]:checked").val();
+      let cekBoolean = $("input[type=checkbox][name=cekboo]:checked").val();
+      $.ajax({
+        method: "GET",
+        url: `${API_URL}siswa`,
+        data: { page, id, str, int, float, startdate, enddate, boolean, cekId, cekString, cekInteger, cekFloat, cekDate, cekBoolean },
+        dataType: 'json'
+      })
+        .done(function (hasil) {
+          const data = hasil.data;
+          let html = '';
+          let page = hasil.page;
+          let pages = hasil.pages;
+          let pagination = '';
+          data.forEach(element => {
+            html += `
+        <tr>
+          <th scope="row">${element.id}</th>
+          <td>${element.stringdata}</td>
+          <td>${element.integerdata}</td>
+          <td>${element.floatdata}</td>
+          <td>${moment(element.datedata).format('DD MMMM YYYY')}</td>
+          <td>${element.booleandata}</td>
+          <td><button type="button" class="btn btn-success btn-edit" data-id="${element.id}">Edit</button>
+             <button class="btn btn-danger btn-delete" type="button" data-id="${element.id}">Delete</button>
+          </td>
+        </tr>
+        `
+          });
+          if (page == 1) {
+            pagination += `<li class="page-item prevoius disabled" pageid="${page - 1}"><a class="page-link" href="#">Previous</a></li>\n`;
+          } else {
+            pagination += `<li class="page-item previous" pageid=${page - 1}><a class="page-link" href="#">Previous</a></li>\n`;
+          }
+
+          for (i = 1; i <= pages; i++) {
+            if (i == page) {
+              pagination += `<li class="page-item active" pageid="${i}"><a class="page-link" href="#">${i}</a></li>\n`;
+            } else {
+              pagination += `<li class="page-item" pageid="${i}"><a class="page-link" href="#">${i}</a></li>\n`;
+            }
+          }
+          if (page == Number(pages)) {
+            pagination += `<li class="page-item next disabled" pageid="${page + 1}"><a class="page-link" href="#">Next</a></li>\n`;
+          } else {
+            pagination += `<li class="page-item next" pageid=${page + 1}><a class="page-link" href="#">Next</a></li>\n`;
+          }
+
+          $('table tbody').html(html);
+          $('nav ul').html(pagination);
+        })
+        .fail(function (jqXHR, textStatus) {
+          alert("Request failed: " + textStatus);
+        });
+    }
+
+    const addData = (bread) => {
+      $.ajax({
+        method: "POST",
+        url: `${API_URL}siswa`,
+        data: bread
+      })
+        .done(function (data) {
+          loadData();
+        })
+        .fail(function (jqXHR, textStatus) {
+          alert("Request failed: " + textStatus);
+        });
+      $('#form-add').trigger('reset')
+    }
+
+    const deleteData = (id) => {
+      $.ajax({
+        method: "DELETE",
+        url: `${API_URL}siswa/${id}`
+      })
+        .done(function (msg) {
+          loadData();
+        })
+        .fail(function (jqXHR, textStatus) {
+          alert("Request failed: " + textStatus);
+        });
+    }
+
+    const editData = (id, stringdata, integerdata, floatdata, booleandata, datedata) => {
+      $.ajax({
+        method: "PUT",
+        url: `${API_URL}siswa/${id}`,
+        data: { stringdata, integerdata, floatdata, booleandata, datedata }
+      })
+        .done(() => {
+          loadData();
+        })
+        .fail(function (jqXHR, textStatus) {
+          alert("Request failed: " + textStatus);
+        });
+      $('#editString').val('')
+      $('#editId').val('')
+      $('#editInteger').val('')
+      $('#editFloat').val('')
+      $('#editDate').val('')
+      $('#editBoolean').val('')
+    }
+    const printData = (id) => {
+      $.ajax({
+        method: "GET",
+        url: `${API_URL}siswa/${id}`,
+        dataType: 'json'
+      })
+        .done(hasil => {
+          let html = '';
+          hasil.forEach(element => {
+            $('#editId').val(element.id);
+            $('#editString').val(element.stringdata);
+            $('#editInteger').val(element.integerdata);
+            $('#editFloat').val(element.floatdata);
+            $('#editDate').val(moment(element.datedata).format('YYYY-MM-DD'));
+            if (element.booleandata == true) {
+              html += `<option value="true" selected>true</option>
+                            <option value="false">false</option>`;
+            } else {
+              html += `<option value="false" selected>false</option>
+                <option value="true">true</option>`;
+            };
+            $('#editBoolean').html(html)
+          })
+        })
+        .fail(function (jqHXR, textStatus) {
+          alert("Request failed: " + textStatus)
+        })
+    }
+  </script>
+</body>
+
+</html>
